@@ -1,4 +1,4 @@
-# WorkflowManager
+# Adsterra Hidden Ad Network (WorkflowManager)
 
 A lightweight Android library for automated sequential WebView loading with proxy support, smart node management, and built-in interaction simulation.
 
