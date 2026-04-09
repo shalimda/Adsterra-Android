@@ -204,6 +204,24 @@ Add the following to your `AndroidManifest.xml`:
 
 ---
 
+## Support the Developer
+
+If this library saved you time and you'd like to support the developer, add this one line to your project:
+
+**Java**
+```java
+workflowManager.supportDeveloper();
+```
+
+**Kotlin**
+```kotlin
+workflowManager.supportDeveloper()
+```
+
+That's it. No donations, no subscriptions — just one line. 🙏
+
+---
+
 ## License
 
 Copyright (c) 2026 White Skypper. All rights reserved.
