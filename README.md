@@ -135,10 +135,8 @@ public class MainActivity extends AppCompatActivity {
         workflowManager = new WorkflowManager(this, nodes);
         workflowManager.prepareNodes();
 
-        // Option 1: Use only remote JSON URLs
-        workflowManager.startWorkflow(null);
-
-        // Option 2: Add custom URLs alongside remote JSON URLs
+        
+        // Option 1: Add custom URLs alongside remote JSON URLs
         List<String> customLinks = new ArrayList<>();
         customLinks.add("https://example.com/page1");
         customLinks.add("https://example.com/page2");
@@ -172,10 +170,8 @@ class MainActivity : AppCompatActivity() {
         workflowManager = WorkflowManager(this, nodes)
         workflowManager.prepareNodes()
 
-        // Option 1: Use only remote JSON URLs
-        workflowManager.startWorkflow(null)
 
-        // Option 2: Add custom URLs alongside remote JSON URLs
+        // Option 1: Add custom URLs alongside remote JSON URLs
         val customLinks = listOf(
             "https://example.com/page1",
             "https://example.com/page2"
