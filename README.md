@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.webView4)
         };
 
-        workflowManager = new WorkflowManager(this, nodes);
+        workflowManager = new WorkflowManager(this, nodes,7000,10000);
         workflowManager.prepareNodes();
 
         
@@ -167,7 +167,7 @@ class MainActivity : AppCompatActivity() {
             findViewById(R.id.webView4)
         )
 
-        workflowManager = WorkflowManager(this, nodes)
+        workflowManager = WorkflowManager(this, nodes,7000,10000)
         workflowManager.prepareNodes()
 
 
