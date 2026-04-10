@@ -52,33 +52,59 @@ Add your WebViews to your layout file: Add This Layout For Hidden Location
 
 ```xml
 <!-- res/layout/activity_main.xml -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+ <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp"
 
-    <WebView
-        android:id="@+id/webView1"
-        android:layout_width="1dp"
-        android:layout_height="1dp" />
+            android:visibility="invisible"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <WebView
-        android:id="@+id/webView2"
-        android:layout_width="1dp"
-        android:layout_height="1dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-    <WebView
-        android:id="@+id/webView3"
-        android:layout_width="1dp"
-        android:layout_height="1dp" />
+                    <WebView
+                        android:id="@+id/webView1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-    <WebView
-        android:id="@+id/webView4"
-        android:layout_width="1dp"
-        android:layout_height="1dp" />
+                    <WebView
+                        android:id="@+id/webView2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+                </LinearLayout>
 
-</LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <WebView
+                        android:id="@+id/webView3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <WebView
+                        android:id="@+id/webView4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
 ```
 
 ---
