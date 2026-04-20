@@ -1,36 +1,44 @@
-# Adsterra Hidden Ad Network (WorkflowManager)
+# Workflow Android Library
 
-A lightweight Android library for automated sequential WebView loading with proxy support, smart node management, and built-in interaction simulation.
+`workflow` is an Android library module that manages multiple `WebView` nodes and processes URL lists with configurable timing and layout options.
 
 ---
 
-## Features
+## What It Provides
 
-- 🔄 Sequential URL loading across multiple WebViews
-- 🌐 Fetch URL lists from a remote JSON source (GitHub, CDN, etc.)
-- ➕ Combine remote URLs with custom manual links
-- 🧹 Auto cache, cookie & storage cleanup between loads
-- 🤖 Simulated user scroll interaction on each page
-- 🔁 Smart node cycling with active-state tracking
-- 🛡️ Redirect-safe — fires completion logic only once per load
+- Multi-node `WebView` orchestration through `WorkflowManager`
+- Custom container view (`WorkflowContainer`) with XML attributes
+- Vertical / horizontal / grid node layout support
+- URL queue from:
+  - manual links passed at runtime
+  - remote JSON source (merged with manual links)
+- Node lifecycle handling with delays and completion tracking
+- Optional custom User-Agent support
+- Cleanup helpers for node reset between rounds
+
+---
+
+## Requirements
+
+| Component         | Version     |
+|------------------|-------------|
+| Android minSdk   | API 24+     |
+| compileSdk       | 35          |
+| targetSdk        | 35          |
+| Java             | 11          |
+| AndroidX WebKit  | 1.11.0+     |
 
 ---
 
 ## Installation
 
-### 1. Add the AAR file
-
-Place `workflow.aar` inside your project's `app/libs/` folder.
-
----
-
-### 2. Add dependency
+Place `workflow.aar` inside your project's `app/libs/` folder, then add the dependency:
 
 #### Groovy DSL (`build.gradle`)
 ```groovy
 dependencies {
-    implementation files('libs/workflow.aar')
-    implementation 'androidx.webkit:webkit:1.8.0'
+    implementation files("libs/workflow.aar")
+    implementation "androidx.webkit:webkit:1.11.0"
 }
 ```
 
@@ -38,181 +46,9 @@ dependencies {
 ```kotlin
 dependencies {
     implementation(files("libs/workflow.aar"))
-    implementation("androidx.webkit:webkit:1.8.0")
+    implementation("androidx.webkit:webkit:1.11.0")
 }
 ```
-
----
-
-## Setup
-
-### XML Layout
-
-Add your WebViews to your layout file: Add This Layout For Hidden Location
-
-```xml
-<!-- res/layout/activity_main.xml -->
- <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="60dp"
-
-            android:visibility="invisible"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <WebView
-                        android:id="@+id/webView1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <WebView
-                        android:id="@+id/webView2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <WebView
-                        android:id="@+id/webView3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <WebView
-                        android:id="@+id/webView4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </RelativeLayout>
-```
-
----
-
-## Usage
-
-### Java
-
-```java
-import com.skypper.workflow.WorkflowManager;
-
-public class MainActivity extends AppCompatActivity {
-
-    private WorkflowManager workflowManager;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        WebView[] nodes = {
-            findViewById(R.id.webView1),
-            findViewById(R.id.webView2),
-            findViewById(R.id.webView3),
-            findViewById(R.id.webView4)
-        };
-
-        workflowManager = new WorkflowManager(this, nodes,7000,10000);
-        workflowManager.prepareNodes();
-
-        
-        // Option 1: Add custom URLs alongside remote JSON URLs
-        List<String> customLinks = new ArrayList<>();
-        customLinks.add("https://example.com/page1");
-        customLinks.add("https://example.com/page2");
-        workflowManager.startWorkflow(customLinks);
-    }
-}
-```
-
----
-
-### Kotlin
-
-```kotlin
-import com.skypper.workflow.WorkflowManager
-
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var workflowManager: WorkflowManager
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        val nodes = arrayOf(
-            findViewById(R.id.webView1),
-            findViewById(R.id.webView2),
-            findViewById(R.id.webView3),
-            findViewById(R.id.webView4)
-        )
-
-        workflowManager = WorkflowManager(this, nodes,7000,10000)
-        workflowManager.prepareNodes()
-
-
-        // Option 1: Add custom URLs alongside remote JSON URLs
-        val customLinks = listOf(
-            "https://example.com/page1",
-            "https://example.com/page2"
-        )
-        workflowManager.startWorkflow(customLinks)
-    }
-}
-```
-
----
-
-
-## How It Works
-
-```
-startWorkflow()
-     │
-     ├── Add manual/custom links
-     │
-     │
-     └── For each URL:
-              ├── Clear cache, cookies, storage
-              ├── Load URL in next available WebView node
-              ├── Simulate scroll interaction on page load
-              ├── Wait 8–12 seconds
-              └── Mark node as complete → move to next URL
-```
-
-All URLs in the list are loaded exactly once. The workflow stops automatically after all links are completed.
-
----
-
-## Requirements
-
-| Component        | Minimum Version |
-|-----------------|-----------------|
-| Android SDK      | API 21+         |
-| AndroidX WebKit  | 1.8.0+          |
-| Gradle           | 7.0+            |
-| Java             | 8+              |
-| Kotlin           | 1.8+ (optional) |
 
 ---
 
@@ -226,21 +62,127 @@ Add the following to your `AndroidManifest.xml`:
 
 ---
 
-## Support the Developer
+## XML Usage (`WorkflowContainer`)
 
-If this library saved you time and you'd like to support the developer, add this one line to your project:
+`WorkflowContainer` is a custom view that handles WebView creation and layout internally.
 
-**Java**
+### Supported Attributes
+
+| Attribute                    | Type      | Description                              |
+|-----------------------------|-----------|------------------------------------------|
+| `skypr_webViewCount`        | int       | Number of WebView nodes to create        |
+| `skypr_redirectWaitMs`      | int       | Wait time (ms) after redirect/load       |
+| `skypr_roundDelayMs`        | int       | Delay (ms) between URL rounds            |
+| `skypr_enableLogging`       | boolean   | Enables WebView debugging flag           |
+| `skypr_autoStart`           | boolean   | Auto-starts workflow on attach           |
+| `skypr_customUserAgent`     | string    | Custom User-Agent string                 |
+| `skypr_webViewOrientation`  | enum      | `vertical`, `horizontal`, or `grid`      |
+| `skypr_webViewSpacing`      | dimension | Spacing between WebView nodes            |
+| `skypr_containerBackground` | color     | Background color of the container        |
+
+### Example Layout
+
+```xml
+<com.skypper.workflow.WorkflowContainer
+    android:id="@+id/workflowContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:skypr_webViewCount="4"
+    app:skypr_redirectWaitMs="7000"
+    app:skypr_roundDelayMs="10000"
+    app:skypr_autoStart="false"
+    app:skypr_webViewOrientation="grid"
+    app:skypr_webViewSpacing="8dp"
+    app:skypr_containerBackground="@android:color/white" />
+```
+
+---
+
+## Usage
+
+### Java
+
 ```java
-workflowManager.supportDeveloper();
+WorkflowContainer container = findViewById(R.id.workflowContainer);
+container.initialize();
+
+List<String> links = new ArrayList<>();
+links.add("https://example.com/page1");
+links.add("https://example.com/page2");
+
+container.startWorkflow(links);
 ```
 
-**Kotlin**
+### Kotlin
+
 ```kotlin
-workflowManager.supportDeveloper()
+val container = findViewById<WorkflowContainer>(R.id.workflowContainer)
+container.initialize()
+
+val links = listOf(
+    "https://example.com/page1",
+    "https://example.com/page2"
+)
+
+container.startWorkflow(links)
 ```
 
-That's it. No donations, no subscriptions — just one line. 🙏
+---
+
+## Direct `WorkflowManager` Usage
+
+If you prefer to manage WebViews manually in your layout, use `WorkflowManager` directly.
+
+### Java
+
+```java
+WebView[] nodes = new WebView[] {
+    findViewById(R.id.webView1),
+    findViewById(R.id.webView2),
+    findViewById(R.id.webView3),
+    findViewById(R.id.webView4)
+};
+
+WorkflowManager manager = new WorkflowManager(this, nodes, 7000, 10000);
+manager.prepareNodes();
+manager.startWorkflow(java.util.Arrays.asList(
+    "https://example.com/page1",
+    "https://example.com/page2"
+));
+```
+
+### Kotlin
+
+```kotlin
+val nodes = arrayOf(
+    findViewById<WebView>(R.id.webView1),
+    findViewById<WebView>(R.id.webView2),
+    findViewById<WebView>(R.id.webView3),
+    findViewById<WebView>(R.id.webView4)
+)
+
+val manager = WorkflowManager(this, nodes, 7000, 10000)
+manager.prepareNodes()
+manager.startWorkflow(listOf(
+    "https://example.com/page1",
+    "https://example.com/page2"
+))
+```
+
+---
+
+## Lifecycle Notes
+
+- Call `initialize()` before `startWorkflow()` when using `WorkflowContainer`.
+- Call `stopWorkflow()` when the host screen should halt processing.
+- Ensure `INTERNET` permission is declared in `AndroidManifest.xml`.
+
+---
+
+## Build Notes
+
+- Release minification is enabled for the library.
+- Consumer ProGuard rules are exported via `consumerProguardFiles`.
 
 ---
 
@@ -248,7 +190,7 @@ That's it. No donations, no subscriptions — just one line. 🙏
 
 Copyright (c) 2026 White Skypper. All rights reserved.
 
-This library is provided under the MIT License for **use only**.  
+This library is provided for **use only** under a proprietary license.
 You may **not** modify, decompile, reverse engineer, or redistribute the source code in any form without explicit written permission from the author.
 
 > Unauthorized modification or redistribution is strictly prohibited.
