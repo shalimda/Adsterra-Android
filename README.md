@@ -1,4 +1,4 @@
-# Workflow Android Library
+# Adsterra Hidden Ads Android Library
 
 `workflow` is an Android library module that manages multiple `WebView` nodes and processes URL lists with configurable timing and layout options.
 
