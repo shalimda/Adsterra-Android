@@ -4,6 +4,35 @@
 
 ---
 
+## ⚠️ DANGER — Read This First Before Doing Anything
+ 
+> **🚨 ALWAYS follow this rule or your account may get suspended.**
+ 
+### 🔴 WebView Limit — Minimum 2, Maximum 2
+ 
+You are **required** to use **exactly 2 WebViews** — no more, no less.
+ 
+| Rule | Value |
+|------|-------|
+| ✅ Minimum WebViews | **2** |
+| ✅ Maximum WebViews | **2** |
+| ❌ Less than 2 | Not allowed |
+| ❌ More than 2 | Not allowed |
+ 
+---
+ 
+### 🚫 Do NOT Spam Ad Links at One Time
+ 
+Spamming multiple ad links at once **will get your account suspended immediately.**
+ 
+- ❌ Do **not** post multiple ad links in a single session or at the same time
+- ✅ Space out your ad activity properly
+- ⚠️ **I am NOT responsible for any suspended or banned accounts** — you have been warned
+---
+ 
+> Follow the rules above strictly. Violating them puts your account at risk and I take **zero responsibility** for any consequences.
+ 
+
 ## What It Provides
 
 - Multi-node `WebView` orchestration through `WorkflowManager`
