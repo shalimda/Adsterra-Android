@@ -112,17 +112,19 @@ Add the following to your `AndroidManifest.xml`:
 ### Example Layout
 
 ```xml
-<com.skypper.workflow.WorkflowContainer
-    android:id="@+id/workflowContainer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:skypr_webViewCount="4"
-    app:skypr_redirectWaitMs="7000"
-    app:skypr_roundDelayMs="10000"
-    app:skypr_autoStart="false"
-    app:skypr_webViewOrientation="grid"
-    app:skypr_webViewSpacing="8dp"
-    app:skypr_containerBackground="@android:color/white" />
+  <com.skypper.workflow.WorkflowContainer
+                android:id="@+id/workflowContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:skypr_webViewCount="2"
+                android:visibility="invisible"
+                android:background="@color/black"
+                app:skypr_redirectWaitMs="7000"
+                app:skypr_roundDelayMs="15000"
+                app:skypr_containerBackground="@color/red"
+                app:skypr_webViewOrientation="horizontal"
+                android:layout_marginBottom="@dimen/_150sdp"
+                app:skypr_autoStart="true" />
 ```
 
 ---
